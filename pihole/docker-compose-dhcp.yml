@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+    pihole:
+        container_name: pihole
+        network_mode: host
+        restart: unless-stopped
+        ports:
+            - '53:53/tcp'
+            - '53:53/udp'
+            - '89:80'
+            - '443:443'
+        environment:
+            - TZ=Europe/Madrid
+            - INTERFACE=eth0
+            - ServerIP=192.168.0.31
+            - WEBPASSWORD=YOURPASSWORD
+            - WEB_PORT=89
+        volumes:
+            - '${DOCKER_CONFIGS}/etc/pihole/:/etc/pihole/'
+            - '${DOCKER_CONFIGS}/etc/dnsmasq.d/:/etc/dnsmasq.d/'
+        image: 'pihole/pihole:latest'
